@@ -1,0 +1,39 @@
+<h1>Team League</h1>
+
+    <p>Create a new division:</p>
+
+    <form action="/divisions" method="post">
+      <label for="name">Assign a name to your Division:</label>
+      <input id="name" name="name" type="text">
+      <button type="submit">Add division</button>
+    </form>
+
+    <p> Add employees to any division:</p>
+
+    <form action="/employees" method="post">
+      <label for="division_id">Select a List</label>
+      <select id='division_id' name='division_id' type='text'>
+        <%@divisions.each() do |division|%>
+              <option value="<%= division.id()%>"> <%= division.name() %> </option>
+        <%end%>
+      </select>
+      <label for="name">Name of the employee:</label>
+      <input id="name" name="name" type="text">
+
+      <button type="submit">Add employee</button>
+    </form>
+
+    <p>Click on a division to see its employees:</p>
+
+    <ul>
+      <%@divisions.each() do |division|%>
+        <form action="/divisions" method="post">
+          <li style="margin-bottom:2px"><a href="/divisions/<%=division.id%>"><%= division.name() %></a>
+            <input type='hidden' name='_method' value="delete" >
+            <input type='hidden' name='id' value='<%=division.id()%>'>
+            <button class= "btn btn-warning btn-xs">Delete</button>
+          </li>
+        </form>
+      <%end%>
+    </ul>
+    <p>There are no divisions yet!</p>
