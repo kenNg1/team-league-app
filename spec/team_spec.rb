@@ -9,4 +9,12 @@ describe(Team) do
       expect(test_team.players()).to(eq([test_player1, test_player2]))
     end
   end
+  # describe("#add_game") do
+  #   it('adds a game') do
+  #     team_a = Team.create({:name => "Spaghetti Monsters"})
+  #     team_b = Team.create({:name => "B"})
+  #     team_a.add_game(team_b)
+  #     expect(team_a.games()).to(eq())
+  #   end
+  # end
 end

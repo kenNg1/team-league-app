@@ -25,15 +25,18 @@
 
     <p>Click on a team to see its players:</p>
 
-    <ul>
-      <%@teams.each() do |team|%>
-        <form action="/teams" method="post">
-          <li style="margin-bottom:2px"><a href="/teams/<%=team.id%>"><%= team.name() %></a>
-            <input type='hidden' name='_method' value="delete" >
-            <input type='hidden' name='id' value='<%=team.id()%>'>
-            <button class= "btn btn-warning btn-xs">Delete</button>
-          </li>
-        </form>
-      <%end%>
-    </ul>
+    <%if @teams.any? %>
+      <ul>
+          <%@teams.each() do |team|%>
+            <form action="/teams" method="post">
+              <li style="margin-bottom:2px"><a href="/teams/<%=team.id%>"><%= team.name() %></a>
+                <input type='hidden' name='_method' value="delete" >
+                <input type='hidden' name='id' value='<%=team.id()%>'>
+                <button class= "btn btn-warning btn-xs">Delete</button>
+              </li>
+            </form>
+          <%end%>
+      </ul>
+    <%else%>
     <p>There are no teams yet!</p>
+    <%end%>
