@@ -1,39 +1,39 @@
 <h1>Team League</h1>
 
-    <p>Create a new division:</p>
+    <p>Create a new team:</p>
 
-    <form action="/divisions" method="post">
-      <label for="name">Assign a name to your Division:</label>
+    <form action="/teams" method="post">
+      <label for="name">Assign a name to your Team:</label>
       <input id="name" name="name" type="text">
-      <button type="submit">Add division</button>
+      <button type="submit">Add team</button>
     </form>
 
-    <p> Add employees to any division:</p>
+    <p> Add players to any team:</p>
 
-    <form action="/employees" method="post">
-      <label for="division_id">Select a List</label>
-      <select id='division_id' name='division_id' type='text'>
-        <%@divisions.each() do |division|%>
-              <option value="<%= division.id()%>"> <%= division.name() %> </option>
+    <form action="/players" method="post">
+      <label for="team_id">Select a Team</label>
+      <select id='team_id' name='team_id' type='text'>
+        <%@teams.each() do |team|%>
+              <option value="<%= team.id()%>"> <%= team.name() %> </option>
         <%end%>
       </select>
-      <label for="name">Name of the employee:</label>
+      <label for="name">Name of the player:</label>
       <input id="name" name="name" type="text">
 
-      <button type="submit">Add employee</button>
+      <button type="submit">Add player</button>
     </form>
 
-    <p>Click on a division to see its employees:</p>
+    <p>Click on a team to see its players:</p>
 
     <ul>
-      <%@divisions.each() do |division|%>
-        <form action="/divisions" method="post">
-          <li style="margin-bottom:2px"><a href="/divisions/<%=division.id%>"><%= division.name() %></a>
+      <%@teams.each() do |team|%>
+        <form action="/teams" method="post">
+          <li style="margin-bottom:2px"><a href="/teams/<%=team.id%>"><%= team.name() %></a>
             <input type='hidden' name='_method' value="delete" >
-            <input type='hidden' name='id' value='<%=division.id()%>'>
+            <input type='hidden' name='id' value='<%=team.id()%>'>
             <button class= "btn btn-warning btn-xs">Delete</button>
           </li>
         </form>
       <%end%>
     </ul>
-    <p>There are no divisions yet!</p>
+    <p>There are no teams yet!</p>

@@ -1,47 +1,47 @@
 require('sinatra')
 require('sinatra/reloader')
 require("sinatra/activerecord")
-require('./lib/division')
-require('./lib/employee')
+require('./lib/team')
+require('./lib/player')
 also_reload('lib/**/*.rb')
 require("pg")
 require("pry")
 
 get("/") do
-  @divisions = Division.all()
-  @employees = Employee.all()
+  @teams = Team.all()
+  @players = Player.all()
   erb(:index)
 end
 
-  delete('/divisions') do
-    division = Division.find(params.fetch('id').to_i)
-    division.delete
+  delete('/teams') do
+    team = Team.find(params.fetch('id').to_i)
+    team.delete
     redirect("/")
   end
 
-  patch('/divisions') do
-    division = Division.find(params.fetch('id').to_i)
+  patch('/teams') do
+    team = Team.find(params.fetch('id').to_i)
     name = params.fetch('name')
-    division.update({:name => name})
+    team.update({:name => name})
     redirect('/')
   end
 
-post('/divisions') do
+post('/teams') do
   name = params.fetch('name')
-  new_division = Division.create(:name => name)
+  new_team = Team.create(:name => name)
   redirect('/')
 end
 
-post('/employees') do
-  division_id = params.fetch('division_id')
+post('/players') do
+  team_id = params.fetch('team_id')
   name = params.fetch('name')
-  new_employee = Employee.create(:name => name, :division_id => division_id)
-  # new_url = '/divisions/' + division_id --> Alternative method
+  new_player = Player.create(:name => name, :team_id => team_id)
+  # new_url = '/teams/' + team_id --> Alternative method
   # redirect new_url --> alternative method
-  redirect ("/divisions/#{division_id}")
+  redirect ("/teams/#{team_id}")
 end
 
-get("/divisions/:id") do
-  @division = Division.find(params.fetch('id').to_i)
-  erb(:division)
+get("/teams/:id") do
+  @team = Team.find(params.fetch('id').to_i)
+  erb(:team)
 end

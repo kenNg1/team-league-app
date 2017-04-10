@@ -1,0 +1,39 @@
+<h1><%= @team.name() %></h1>
+
+<form action="/teams" method="post">
+  <input name="_method" value="patch" type='hidden'>
+  <input id="id" name="id" type="hidden" value="<%= @team.id() %>">
+  <label for="name">Change team name:</label>
+  <input id="name" name="name" type="text">
+  <button type="submit">Submit</button>
+</form>
+
+<!-- <p><a href="/teams/<%= @team.id() %>/edit">Edit <%= @team.name() %> team</a></p>
+    <p><a href="/">Return to Main Page</a></p> -->
+
+<hr>
+
+    <% if @team.players().any?() %>
+      <h3>Here are all the players in this team:</h3>
+      <ul>
+        <% @team.players().each() do |player| %>
+          <li><%= player.name() %> </li>
+        <% end %>
+      </ul>
+      <% else %>
+        <p>There are no players on this team!</p>
+      <% end %>
+
+    <h3>Add a player to <%= @team.name() %> </h3>
+
+    <form action="/players" method="post">
+      <input id="team_id" name="team_id" type="hidden" value="<%= @team.id() %>">
+      <label for="name">Name of player:</label>
+      <input id="name" name="name" type="text">
+      <button type="submit">Add player</button>
+    </form>
+
+    <!-- <p><a href="/teams/<%= @team.id() %>/edit">Edit <%= @team.name() %> team</a></p>
+        <p><a href="/">Return to Main Page</a></p> -->
+
+    <hr>
