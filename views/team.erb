@@ -1,4 +1,4 @@
-<h1><%= @team.name() %></h1>
+<h1><%= @team.name() %>  <small>(<%= @team.coordinator() %>)</small></h1>
 
 <form action="/teams" method="post">
   <input name="_method" value="patch" type='hidden'>
