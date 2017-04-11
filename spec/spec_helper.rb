@@ -17,5 +17,8 @@ RSpec.configure do |config|
     Player.all.each() do |player|
       player.destroy()
     end
+    Game.all.each() do |game|
+      game.destroy()
+    end
   end
 end

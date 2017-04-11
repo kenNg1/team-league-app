@@ -36,4 +36,65 @@
     <!-- <p><a href="/teams/<%= @team.id() %>/edit">Edit <%= @team.name() %> team</a></p>
         <p><a href="/">Return to Main Page</a></p> -->
 
-    <hr>
+  <hr>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Add a Fixture</h3>
+      <div class="row">
+      <div class="col-md-4">
+        <div style="text-align:center"><a href="/teams/<%=@team.id%>/add_home" class="btn btn-primary">Home</a></div>
+      </div>
+      <div class="col-md-4"><div class="text-center">OR</div></div>
+      <div class="col-md-4">
+        <div style="text-align:center"><a href="/teams/<%=@team.id%>/add_away" class="btn btn-primary">Away</a></div>
+      </div>
+    </div>
+    </div>
+    <div class="col-md-6">
+      <%if @add_home%>
+      <form action='/games' method='post'>
+        <h5><b>Home</b></h5>
+        <input id='self_id' name='self_id' value='<%=@team.id()%>' type='hidden'>
+        <input id='team1_id' name='team1_id' value='<%=@team.id()%>' type='hidden'>
+          <h5><%=@team.name%></h5>
+        <h5>vs</h5>
+        <h5><b>Away</b></h5>
+        <select id='team2_id' name='team2_id' type='text'>
+          <% @teams.each() do |team| %>
+            <option value="<%= team.id()%>"> <%= team.name() %> </option>
+          <% end %>
+        </select>
+        <button type='submit'>Add game</button>
+      </form>
+      <%end%>
+
+      <%if @add_home==false%>
+      <form action="/games" method='post'>
+        <h5><b>Home</b></h5>
+        <select id='team1_id' name='team1_id' type='text'>
+          <% @teams.each() do |team| %>
+            <option value="<%= team.id()%>"> <%= team.name() %> </option>
+          <% end %>
+        </select>
+        <h5>vs</h5>
+        <h5><b>Away</b></h5>
+        <input id='self_id' name='self_id' value='<%=@team.id()%>' type='hidden'>
+        <input id='team2_id' name='team2_id' value='<%=@team.id()%>' type='hidden'>
+          <h5><%=@team.name%></h5>
+          <button type='submit'>Add game</button>
+      </form>
+      <%end%>
+    </div>
+  </div>
+
+  <hr>
+
+
+
+  <div class="col-md-6">
+    <h3>Away Games</h3>
+    <% @team.game_as_team2.each() do |game| %>
+      <h5> <%= game.team1.name() %> </h5>
+    <% end %>
+  </div>
