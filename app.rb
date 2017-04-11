@@ -36,7 +36,9 @@ post('/players') do
   redirect ("/teams/#{team_id}")
 end
 
-get("/teams/:id") do
+get("/teams/:id/?") do
+  @add_home = params[:add_home]
+  @add_away = params[:add_away]
   @team = Team.find(params.fetch('id').to_i)
   @teams= Team.all()
   @games = @team.game_as_team1 + @team.game_as_team2
@@ -55,20 +57,7 @@ end
 # a href (/teams/17/?add_away=true)
 # params.fetch(add_away, false)
 
-  get("/teams/:id/add_home") do
-    @team = Team.find(params.fetch('id').to_i)
-    @teams= Team.all()
-    @games = @team.game_as_team1 + @team.game_as_team2
-    @add_home = true
-    erb(:team)
-  end
-  get("/teams/:id/add_away") do
-    @team = Team.find(params.fetch('id').to_i)
-    @teams= Team.all()
-    @games = @team.game_as_team1 + @team.game_as_team2
-    @add_home = false
-    erb(:team)
-  end
+
   post("/games") do
     team1_id = params.fetch('team1_id')
     team2_id = params.fetch('team2_id')
