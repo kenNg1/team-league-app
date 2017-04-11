@@ -1,11 +1,13 @@
 ENV['RACK_ENV'] = 'test'
 
-require('rspec')
-require('pg')
-require('sinatra/activerecord')
-require('./lib/team')
-require('./lib/player')
-require('./lib/game')
+require("bundler/setup")
+Bundler.require(:default, :test)
+set(:root, Dir.pwd())
+
+# require('capybara/rspec') not required as specified in Gem file
+Capybara.app = Sinatra::Application
+set(:show_exceptions, false)
+Dir[File.dirname(__FILE__) + '/../lib/*.rb'].each { |file| require file }
 
 RSpec.configure do |config|
   config.after(:each) do

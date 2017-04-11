@@ -1,15 +1,11 @@
-require('sinatra')
-require('sinatra/reloader')
-require("sinatra/activerecord")
-require('./lib/team')
-require('./lib/player')
-also_reload('lib/**/*.rb')
-require("pg")
-require("pry")
+require("bundler/setup")
+    Bundler.require(:default)
+Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 
 get("/") do
   @teams = Team.all()
   @players = Player.all()
+  binding.pry
   erb(:index)
 end
 
