@@ -1,5 +1,11 @@
 <h1><%= @team.name() %>  <small>(<%= @team.coordinator() %>)</small></h1>
 
+<h3>Goal Diff <%=@team.goaldiff()%></h3>
+<h3>Wins <%=@team.winrate[:win]%></h3>
+<h3>Loss <%=@team.winrate[:loss]%></h3>
+<h3>Draws <%=@team.winrate[:draw]%></h3>
+<h3>Win Rate <%=100.0*@team.winrate[:win].to_f/(@team.winrate[:win].to_f+@team.winrate[:loss].to_f+@team.winrate[:draw].to_f)%>%</h3>
+
 <form action="/teams" method="post">
   <input name="_method" value="patch" type='hidden'>
   <input id="id" name="id" type="hidden" value="<%= @team.id() %>">
@@ -88,41 +94,25 @@
     </div>
   </div>
 
-  <hr>
-
-  <div class="row">
-    <div class="col-md-6">
-      <h3>Home Games</h3>
-      <% @team.game_as_team1.each() do |game| %>
-        <li><%= game.team1.name() %> <%= game.team1_score() %> <%= game.team2.name() %> <%= game.team2_score() %></li>
-      <% end %>
-    </div>
-
-    <div class="col-md-6">
-      <h3>Away Games</h3>
-      <% @team.game_as_team2.each() do |game| %>
-        <h5> <%= game.team1.name() %> </h5>
-      <% end %>
-    </div>
-  </div>
-
 <hr>
 
   <h3> All Games </h3>
   <% @games.each() do |game| %>
-    <li style='margin-bottom: 3px'><%= game.team1.name() %> <%= game.team1_score() %> : <%= game.team2.name() %> <%= game.team2_score() %>
-      <a href="/teams/<%=@team.id%>/add_result" class="btn btn-primary btn-xs">Add Result</a>
-    </li>
-
-      <%if @add_result==true%>
+      <%if @add_result%>
       <form action='/games' method='post'>
         <input name='_method' value='patch' type='hidden'>
         <input name='game_id' name='game_id' value='<%=game.id%>' type='hidden'>
         <input id='self_id' name='self_id' value='<%=@team.id()%>' type='hidden'>
-        <input placeholder="<%=game.team1.name%> Score" name='team1_score' id='team1_score' type='number'>
-        <input placeholder="<%=game.team2.name%> Score" name='team2_score' id='team2_score' type='number'>
+        <label><%=game.team1.name()%></label>
+        <input placeholder="<%=game.team1_score%>" name='team1_score' id='team1_score' type='number'>
+        <label><%=game.team2.name()%></label>
+        <input placeholder="<%=game.team2_score%>" name='team2_score' id='team2_score' type='number'>
         <button>Add Result</button>
       </form>
+      <%else%>
+      <li style='margin-bottom: 3px'><%= game.team1.name() %> <%= game.team1_score() %> : <%= game.team2.name() %> <%= game.team2_score() %>
+        <a href="/teams/<%=@team.id%>/?add_result=true" class="btn btn-primary btn-xs">Add Result</a>
+      </li>
       <%end%>
     <%end%>
 
