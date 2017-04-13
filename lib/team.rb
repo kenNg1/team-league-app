@@ -24,7 +24,7 @@ class Team < ActiveRecord::Base
 
   def winrate()
     wld = {:win=> 0, :loss=> 0, :draw=>0}
-    results = DB.exec("SELECT * FROM games WHERE team1_id=#{self.id()} OR team2_id=#{self.id()} team2_score!=nil;")
+    results = DB.exec("SELECT * FROM games WHERE (team1_id=18 AND team1_score is not null) OR (team2_id=18 AND team2_score is not null);")
     results.each() do |result|
       if result['team1_id'].to_i == self.id()
         if(result.fetch('team1_score')).>(result.fetch('team2_score'))
